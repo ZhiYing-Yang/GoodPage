@@ -1,0 +1,110 @@
+a:hover{
+    text-decoration: none;
+}
+.top_app {
+    padding: 3%;
+    margin: 0;
+    box-shadow: 0 1px 2px #949393;
+    float: left;
+}
+
+.top_app a {
+    display: block;
+}
+
+.top_app #logonet {
+    background: url(../img/icon/renrenji.png) left center no-repeat;
+    background-size: 79px;
+    padding-left: 90px;
+    line-height: 14px;
+}
+
+.top_app #open_app {
+    background: url(../img/icon/phone.png) left center no-repeat;
+    background-size: 20px;
+    padding-left: 20px;
+}
+
+.media-object {
+    width: 60px;
+}
+.author {
+    padding: 5% 0;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 20px;
+}
+.author .autonym{
+    color: #F3130D;
+}
+.author .autonym{
+    padding-left: 5px; 
+}
+.author .autonym img{
+    height: 30px;
+}
+.guanzhu_button{
+    width: 80px;
+    border: 1px solid #3495FC;
+    background: #3495FC;
+    color: #fff;
+    
+}
+.sixin_button{
+    background:#fff;
+    color:#3495FC;
+    border: 1px solid #3495FC;
+    width: 80px;
+}
+.sixin_button span img{
+    width: 15px;
+}
+.created_meiji{
+    background: #F6F6F6;
+}
+.created_meiji p {
+    margin: 10px 0;
+    letter-spacing: 2px;
+    color: #515151;
+}
+.created_meiji p span{
+    color: #C1C1C1;
+}
+.article_list li{
+    border-bottom: 1px solid #ccc;
+}
+.article_list li .tiny_content{
+    color:#AFAFAF;
+}
+.thumb_list{
+    padding-left: 0;
+    
+}
+.thumbnail{
+     border: none;
+     margin-bottom: 0;
+}
+.thumb{
+    overflow: hidden;
+}
+.article_list_bottom .item{
+    float: right;
+    height: 22px;
+}
+.article_list_bottom .time{
+    color:#AFAFAF;
+}
+.article_list_bottom .item span{
+    margin-left: 5px;
+    color:#AFAFAF;
+}
+.article_list_bottom .item span img{
+    width: 16px;
+}
+.article_list_bottom .type{
+    background: #3595FF;
+    font-size: 12px;
+    color: #fff;
+    padding: 0 2px;
+    border-radius: 2px;
+}

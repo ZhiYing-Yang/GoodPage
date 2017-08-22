@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 ,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/looknews.css">
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/public.js" ></script>
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/bootstrap.js"></script>
+    <style type="text/css">
+       /*半透明背景*/
+        .hui_bg{
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,.5);
+            display: none;
+        }
+        /*评论区*/
+         .comment_area .data_input{
+             margin: 0 auto;
+             margin-top:2vw;
+         }
+         .comment_area textarea{
+             resize: none;
+             border-radius: 1vw;
+         }
+        .comment_area button{
+            float: right;
+            width: 80px;
+           margin: 2vw 0;
+           margin-right: 2.5vh;
+           background: #49BF37;
+           color: #fff;
+           border: none;
+        }
+    </style>
+    <title>文章浏览</title>
+</head>
+
+<body>
+        <!-- js中用到的PHP变量 -->
+    <input type="hidden" id="article_id" value="<?php echo $article['article_id'] ?>">
+    <input type="hidden" id="user_id" value="<?php echo $this->session->userdata('user_id') ?>">
+    <input type="hidden" id='article_user_id' value="<?php echo $article['user_id'] ?>">
+        <!-- js中用到的PHP变量 -->
+
+
+    <div class="blank">
+    <div class="all" style="display: <?php echo $article['hidden'] ?>">
+        <div class="top_app col-md-12 col-sm-12 col-xs-12">
+            <div class="container container_fluid">
+                <div class="row">
+                    <a id="logonet" class="col-md-10 col-sm-9 col-xs-8 disabled">网络信息发布工具</br>rrnote.com</a>
+                    <a href="<?php echo $_SERVER['download_app'] ?>" id="open_app" class="col-md-2 col-sm-3 sol-xs-4 fr disabled open_app">打开APP</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="look_content">
+        <div class="container container_fluid">
+            <div class="row">
+                <div class="content_content col-md-12 col-sm-12 col-xs-12">
+                    <h2 id="article_title"><?php echo $article['title'] ?></h2>
+                    <div class="media title_content">
+                        <div class="media-left media-middle">
+                            <a href="#"><img class="media-object img-circle" style='width: 30px;height: 30px;' src="<?php echo $article['head_portrait'] ?>" alt="头像"></a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading"><a href="<?php echo base_url('author/') . $article['user_id'] ?>"><?php echo $article['name'] ?></a>&nbsp;<span><?php echo date('Y-m-d', strtotime($article['create_time'])) ?></span>&nbsp;<span>阅读量</span>&nbsp;<span><?php echo $article['read_total'] ?></span></h5>
+                        </div>
+                    </div>
+            
+                    <div class="look-content">
+                        <!-- 文章内容 -->
+                       <?php echo $article['content'] ?>
+                    </div>
+                    <div class="praise">
+                        <a class="col-md-1 col-sm-1 col-xs-4 disabled"></a>
+                        <button class="btn col-md-2 col-sm-2 col-xs-4 col-md-offset-4 col-sm-offset-4 praise_article">赞(<?php echo $article['praise'] ?>)</button>
+                        <a class="col-md-1 col-sm-1 col-xs-4 disabled"></a>
+                    </div>
+                    <a href="#" id="report">举报!</a>
+                    <div class="share">
+                        <div class="share_top">
+                            <p class="col-md-5 col-sm-5 col-xs-5 line"></p>
+                            <p class="col-md-2 col-sm-2 col-xs-2 ">分享</p>
+                            <p class="col-md-5 col-sm-5 col-xs-5 line"></p>
+                        </div>
+                        <ul class="shar_imgs">
+                            <li><a class="jiathis_button_weixin share_icons">
+                        			<img src="<?php echo base_url('style/index') ?>/img/icon/friendround.png" alt="朋友圈">
+                        			<h6>朋友圈</h6>
+                        		</a></li>
+                            <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1" charset="utf-8"></script>
+                            <li><a href="#" class="share_icons">
+                        			<img src="<?php echo base_url('style/index') ?>/img/icon/weixin.png" alt="微信">
+                        			<h6>微信好友</h6>
+                        		</a></li>
+                            <li><a class="jiathis_button_tsina share_icons">
+                        			<img src="<?php echo base_url('style/index') ?>/img/icon/weibo.png" alt="微博">
+                        			<h6>微博</h6>
+                        		</a></li>
+                            <li><a class="share_icons" id="qcShareQQDiv">
+                        			<img src="<?php echo base_url('style/index') ?>/img/icon/QQ.png" alt="QQ">
+                        			<h6>QQ好友</h6>
+                        		</a></li>
+                            <li><a class="jiathis_button_qzone share_icons">
+                        			<img src="<?php echo base_url('style/index') ?>/img/icon/QQspace.png" alt="QQ空间">
+                        			<h6>QQ空间</h6>
+                        		</a></li>
+                            <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+                        </ul>
+                    </div>
+
+                    <div class="media author col-md-12 col-sm-12 col-xs-12 " id="go_myindex">
+                        <div class="media-left col-md-2 col-sm-2 col-xs-3  ">
+                            <a href="#"><img class="media-object img-circle" style='width: 15vw;height: 15vw' src="<?php echo $article['head_portrait'] ?>" alt="作者头像"></a>
+                        </div>
+                        <div class="media-body media-middle col-md-5 col-sm-8 col-xs-6">
+                            <h4 class="media-heading">作者:<?php echo $article['name'] ?></h4>
+                            <p><?php echo $article['self_introduction'] ?></p>
+                        </div>
+                        <div class="guanzhu media-right col-md-3 col-sm-2 col-xs-3 fl">
+                            <button type="button" class="guanzhu_button btn">关注</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="content_comment col-md-12 col-sm-12 col-xs-12">
+                    <div class="comment_head">
+                        <h4 class="text-left"><span>|</span>&nbsp;最新评论
+                        <a class="comment_open text-right comment_button" style="display: <?php echo $article['hidden'] ?>">发表评论</a></h4>
+                        <p></p>
+                    </div>
+                    <ul class="users media-list col-md-12 col-sm-12 col-xs-12">
+                        <?php foreach ($comment as $c): ?>
+
+                        <li class="media">
+                            <div class="media-left">
+                                <a href="<?php echo $this->session->userdata('user_id') ?>"><img class="media-object" style='width: 50px;height: 50px' src="<?php echo $c['head_portrait'] ?>" alt="头像"></a>
+                            </div>
+                            <div class="media-body">
+                                <h5 class="media-heading"><?php echo $c['name'] ?><a comment_id='<?php echo $c['comment_id'] ?>' class="ups praise_comment"><?php echo $c['praise'] ?></a></h5>
+                                <p class="time"><?php echo formatTime($c['create_time']) ?></p>
+                                <p class="info"><?php echo $c['content'] ?></p>
+                            </div>
+                            <hr/>
+                        </li>
+
+                        <?php endforeach?>
+                    </ul>
+                    <a class="lookall" id='see_all_comment' style="cursor: pointer;">查看所有评论</a>
+                    <div class="download">
+                        <a href="<?php echo $_SERVER['download_app'] ?>" type="button" class="btn btn-lg btn-block">下载
+                            <span>人人记</span>客户端查看更多
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 自动消失的弹窗提示 -->
+    <span id="alert_info">自动消失的弹窗提示</span>
+
+    </div> <!-- 点击空白地方输入框消失 -->
+
+    <!-- 灰背景 -->
+    <div class="hui_bg"></div>
+
+    <div class="all" style="">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="container_fluid container">
+                <div class="row">
+                    <div class="float_fixed">
+                        <a href="<?php echo base_url('publish/');?>0
+" class="col-md-3 col-sm-3 col-xs-4 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 open_things open_app">发布<?php echo $article['type']?></a>
+                        <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                            <div class="row">
+                                <span class="col-md-6 col-sm-6 col-xs-6 up_count praise_article praise_article_total"><?php echo $article['praise'] ?></span>
+                                <span class="col-md-6 col-sm-6 col-xs-6 comment comment_button"><?php echo $article['comment_total'] ?></span>
+                            </div>
+                        </div>
+                        <button class="comment_button col-md-4 col-sm-4 col-xs-3 apply btn fr">我要留言</button>
+                    </div>
+                    
+
+                    <!-- 评论区 -->
+                    <div class="comment_area data_form" id="comment" style="display: none;">
+                        <div class="data_input input-group  col-md-12 col-sm-11 col-xs-11">
+                            <textarea class="form-control" rows="4" id='comment_content' required="required"></textarea>
+                        </div>
+                        <button class="btn  btn-default btn-sm" id="comment_submit" type="submit">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

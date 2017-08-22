@@ -1,0 +1,313 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft-YaHei", "微软雅黑";
+}
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+.fix_foot,
+.media,
+.content_content img,
+.praise,
+.users,
+.look_content,
+.author,
+.share ,.all{
+    width: 100%;
+}
+
+.title_content .media-body a,
+.tie_adrs h4,
+#report,
+.content_comment .comment_head .comment_open,
+.content_comment .comment_head span,
+.lookall {
+    color: #3595FF;
+}
+
+.title_content .media-body .media-heading,
+.users a,
+.share .share_top p,
+.share .shar_imgs h6,
+.author .media-body p,
+.content_comment .comment_head h4,
+.users .time,
+.users .no-top,
+.top_app a {
+    color: #949393;
+}
+
+.users .ups,
+.float_fixed .open_things,
+.float_fixed .up_count,
+.float_fixed .comment {
+    color: gray;
+}
+
+.praise .btn,
+.author .media-right .btn,
+.download a,
+.float_fixed .apply,
+.data_form .submit {
+    background-color: #3595FF;
+    color: #eee;
+}
+.look-content,.tie_adrs h4{
+    font-size: 16px;
+}
+
+.title_content {
+    width: 100%;
+}
+
+.title_content .media-object {
+    width: 30px;
+}
+
+.title_content .media-body .media-heading {
+    line-height: 30px;
+}
+
+.tie_adrs {
+    width: 100%;
+}
+
+.tie_adrs h4 {
+    line-height: 25px;
+    padding: 20px;
+    border: 1px solid #3595FF;
+    border-radius: 5px;
+}
+
+.top_app {
+    padding: 3%;
+    margin: 0;
+    box-shadow: 0 1px 2px #949393;
+    float: left;
+}
+
+.top_app a {
+    display: block;
+}
+
+.top_app #logonet {
+    background: url(../img/icon/renrenji.png) left center no-repeat;
+    background-size: 79px;
+    padding-left: 90px;
+    line-height: 14px;
+}
+
+.top_app #open_app {
+    background: url(../img/icon/phone.png) left center no-repeat;
+    background-size: 20px;
+    padding-left: 20px;
+}
+
+
+.praise {
+    padding: 10% 0;
+}
+
+.praise .btn {
+    display: block;
+    color: #eee;
+    text-align: center;
+    font-size: 18px;
+}
+
+#report {
+    float: right;
+}
+
+.share .share_top {
+    margin: 10% 0;
+    height: 14px;
+    line-height: 14px;
+    text-align: center;
+}
+
+.share .share_top .line {
+    margin-top: 7px;
+    background-color: #eee;
+}
+
+.share .shar_imgs li {
+    text-align: center;
+    line-height: 50px;
+    float: left;
+    width: 20%;
+}
+
+.share .shar_imgs img {
+    width: 50%;
+}
+
+.author {
+    padding: 5% 0;
+    border: 1px solid #949393;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.author .media-body,
+.author .media-right {
+    margin-top: 13px;
+}
+
+.author .media-body {
+    width: 50%;
+}
+
+.author .media-right {
+    background: url(../img/icon/arrows.png) right center no-repeat;
+    background-size: 20%;
+    margin-top: 15px;
+}
+
+.author .media-right .btn {
+
+    text-align: center;
+}
+
+.author #arrows {
+    width: 12%;
+}
+
+.content_comment {
+    margin-top: 5%;
+}
+
+.content_comment .comment_head {
+    line-height: 20px;
+}
+
+.content_comment .comment_head .comment_open {
+    float: right;
+    font-size: 18px;
+}
+
+.users {
+    margin-top: 10px;
+}
+
+.users .media-object {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.users .info {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.users h5 {
+    font-weight: bold;
+}
+
+.users p {
+    font-size: 12px;
+}
+
+.users .ups {
+    background: url(../img/icon/up.png) left center no-repeat;
+    background-size: 18px;
+    text-indent: 20px;
+    color: gray;
+    float: right;
+}
+
+.lookall {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.download a {
+
+    margin: 5% 0 15% 0;
+}
+.data_form,
+.float_fixed {
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+
+.float_fixed {
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+
+.float_fixed .open_things {
+    background: url(../img/icon/open.png) left center no-repeat;
+}
+
+.float_fixed .up_count {
+    background: url(../img/icon/up.png) left center no-repeat;
+}
+
+.float_fixed .comment {
+    background: url(../img/icon/comment.png) left center no-repeat;
+}
+.float_fixed .apply{
+    height: 40px;
+    border-radius: 0;
+}
+.float_fixed .open_things,
+.float_fixed .up_count,
+.float_fixed .comment {
+    background-size: 21px;
+    text-indent: 21px;
+    display: inline-block;
+    padding: 3px;
+}
+.open_things{
+    margin-left: 2px;
+}
+.data_form{
+    z-index: 10
+}
+.data_form .data_head{
+    text-align: center;
+}
+.data_form .data_head span{
+    font-size: 18px;
+}
+.data_form .data_input input{
+    margin: 3% 0;
+
+}
+#alert_info{
+    position: fixed;
+    top: 50%;
+    background: #000;
+    color: #fff;
+    font-size: 1.5em;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+}
+ 

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 ,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/myindex.css">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url('style/index') ?>/css/looknews.css">
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url('style/index') ?>/js/bootstrap.js"></script>
+    <title>个人主页</title>
+</head>
+<body>
+    <div class="all">
+        <div class="top_app col-md-12 col-sm-12 col-xs-12">
+            <div class="container container_fluid">
+                <div class="row">
+                    <a id="logonet" class="col-md-10 col-sm-9 col-xs-8 disabled">网络信息发布工具</br>rrnote.com</a>
+                    <a href="<?php echo $_SERVER['download_app']?>" id="open_app" class="col-md-2 col-sm-3 sol-xs-4 fr disabled open_app">打开APP</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all">
+    <div class="container container_fluid">
+        <div class="row">
+            <div class="myindex_media media author col-md-12 col-sm-12 col-xs-12 " style='border:none'>
+                <div class="media-left col-md-2 col-sm-2 col-xs-3  ">
+                    <a href="#"><img class="media-object img-circle" style='width: 70px;height: 70px' src="<?php echo $user_info['head_portrait'] ?>" alt="作者头像"></a>
+                </div>
+                <div class="author_info col-md-5 col-sm-8 col-xs-8">
+                    <h4 class="media-heading">
+                        <?php echo $user_info['name'] ?>
+                        <span class="autonym" style='display: <?php if (!$user_info['is_autonym']) {echo 'none';}?>'>
+                            <img src="<?php echo base_url('style/index/img/icon/v.png') ?>" alt="">
+                            <?php echo $user_info['is_autonym'] ?>
+                        </span>
+                    </h4>
+                    <p style='color: gray;'><?php echo $user_info['self_introduction'] ?></p>
+<?php
+$login_user_id = $this->session->userdata('user_id');
+$pattern = '/' . $login_user_id . '/';
+if (preg_match($pattern, $user_info['login_follow']) && !empty($login_user_id)) {
+	echo '<button type="button" class="guanzhu_button btn btn-default" style="background: #C1C1C1;border:1px solid #C1C1C1;">已关注</button>';
+} else {
+	echo '<button type="button" class="guanzhu_button btn btn-default">关注</button>';
+}
+?>
+                     <button type="button" class="sixin_button btn btn-default">
+                     私信
+                     </button>
+
+                </div>
+            </div>
+            <div class="created_meiji col-md-12 col-sm-12 col-xs-12">
+                <p>已发布美记 <span>（<?php echo count($article) ?>）</span></p>
+            </div>
+            <!-- 文章列表 -->
+            <div class="article_list col-md-12 col-sm-12 col-xs-12">
+                <ul class="media-list col-md-12 col-sm-12 col-xs-12">
+                <?php foreach ($article as $a): ?>
+                    <a href="<?php echo base_url('content/') . $a['article_id'] ?>">
+                        <li class="media">
+                            <h5 style="color: #000;"><?php echo $a['title'] ?></h5>
+                            <p class="tiny_content"><?php echo preg_replace(array('/</', '/>/'), array('&lt;', '&gt;'), $a['content']) ?></p>
+                            <div class="thumb">
+<?php
+if (!empty($a['url1'])) {
+	echo '<div class="thumb_list col-sm-6 col-md-4 col-xs-5"><div class="thumbnail"><img src="' . urldecode($a['url1']) . '"></div></div>';
+}
+if (!empty($a['url2'])) {
+	echo '<div class="thumb_list col-sm-6 col-md-4 col-xs-5"><div class="thumbnail"><img src="' . urldecode($a['url2']) . '"></div></div>';
+}
+
+?>
+                                <!-- <div class="thumb_list col-sm-6 col-md-4 col-xs-5">
+                                    <div class="thumbnail">
+                                        <img src="<?php echo base_url('style/index') ?>/img/head1.jpg">
+                                    </div>
+                                </div>
+                                <div class="thumb_list col-sm-6 col-md-4 col-xs-5">
+                                    <div class="thumbnail">
+                                        <img src="<?php echo base_url('style/index') ?>/img/head1.jpg">
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="article_list_bottom">
+                                <span class="type"><?php echo $a['type'] ?></span>
+                                 <span class="time"><?php echo formatTime($a['create_time']) ?></span>
+                                 <span class="item">
+                                     <span class="praise"><img src="<?php echo base_url('style/index') ?>/img/icon/up.png">&ensp;<?php echo $a['praise'] ?><span>
+                                     <span><img src="<?php echo base_url('style/index') ?>/img/icon/comment.png">&ensp;<?php echo $a['comment_total'] ?></span>
+                                 </span>
+                            <div>
+                        </li>
+                    </a>
+                <?php endforeach;?>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+<script>
+//为不同类型文章type配色
+for(var i=0; i<$('.type').length; i++){
+
+    if($('.type').eq(i).html()=='活动'||$('.type').eq(i).html()=='投票'||$('.type').eq(i).html()=='招聘'){
+        //alert($('.type').eq(i).html());
+        $('.type').eq(i).css('background','#28C517');
+    }
+    if($('.type').eq(i).html()=='预订'||$('.type').eq(i).html()=='二手'){
+        //alert($('.type').eq(i).html());
+        $('.type').eq(i).css('background','#F4623B');
+    }
+}
+
+//打开app
+$('.open_app').on('touchend click', function(){
+    location.href='memo://www.orangecpp.com:80/mypath?key=mykey';
+});
+
+//加关注
+$('.guanzhu_button').on('click', function(){
+    if($('.guanzhu_button').html()=='已关注'){
+        return;
+    }
+    $.ajax({
+        url: '<?php echo site_url('API/user/follow/') . $user_info['user_id'] . '/1' ?>',
+        type: 'GET',
+        dataType:'json',
+        success:function(data){
+            if(data.code==200){
+                $('.guanzhu_button').html('已关注');
+                $('.guanzhu_button').css({
+                    'background':'#C1C1C1',
+                    'border':'1px solid #C1C1C1',
+                });
+            }
+            if(data.code==401){
+                alert('请先登录');
+            }
+        },
+});
+
+
+
+});
+</script>
