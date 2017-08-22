@@ -10,8 +10,8 @@ class API_model extends CI_Model {
 		登录检测
 	*/
 	public function get_user_info($data) {
-
-		$status = $this->db->get_where('users', $data)->result_array();
+		$get_info = 'user_id, username, email, tel_number, follow, feature_code, name, sex, head_portrait, self_introduction, create_time, is_autonym';
+		$status = $this->db->select($get_info)->get_where('users', $data)->result_array();
 		unset($status[0]['password'], $status[0]['last_login_time']);
 		return $status;
 	}

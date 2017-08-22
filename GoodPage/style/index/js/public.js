@@ -2,27 +2,32 @@ $(function(){
 	/* 公共jq开始 */
 		/* 公共常量	*/
 	var base_url='http://ascexz.320.io/GoodPage/API/';//API目录
+    var web_http='http://ascexz.320.io/GoodPage/';
+    var app_memo='memo://ascexz.320.io/GoodPage/';
 	var article_id=$('#article_id').attr('value');	//文章id
 	var login_user_id=$('#user_id').attr('value');
-	var article_user_id=$('#article_user_id').attr('value');	
+	var article_user_id=$('#article_user_id').attr('value');
+    var client_type=$('#client_type').attr('value');	
     //评论区
     
         //特效部分
     $('.comment_button').on('click', function(){
-        $('.hui_bg').fadeIn(200);
+        //$('.hui_bg').fadeIn(200);
         $('#comment').slideDown(200, function() {
-             $('.hui_bg').on('click', function(){
+             $('.blank').on('click', function(){
+                 $('#data_form').slideUp(400);
                  $('#comment').slideUp(400);
-                 $('.hui_bg').fadeOut(200);
             });
         });
     });
         //请求部分
     $('#comment_submit').click(function(){
-        if($('#comment_content').length==0){
+        if($('#comment_content').val()==''){
             $('#alert_info').html('评论内容不能为空').fadeIn(400).fadeOut(400);
             return;
         }
+        var token=document.cookie;
+        document.cookie = token+';path=/';
         $.ajax({
             type:'POST',
             url:base_url+'authorised/create_comment',
@@ -42,12 +47,18 @@ $(function(){
                 }
                 if(data.code==200){
                     var user_id=login_user_id;
-                    var html="<li class='media'><div class='media-left'><a href='"+user_id+"'><img class='media-object' src='"+data.data.head_portrait+"' alt='头像'></a></div><div class='media-body'><h5 class='media-heading'>"+data.data.name+"<a comment_id='"+data.data.comment_id+"' class='ups praise_comment'>0</a></h5><p class='time'>"+data.data.create_time+"</p><p class='info'>"+data.data.content+"</p></div><hr/></li>";
+                    var html="<li class='media'><div class='media-left'><a href='"+user_id+"'><img class='media-object' src='"+data.data.head_portrait+"' alt='头像'></a></div><div class='media-body'><h5 class='media-heading'>"+data.data.name+"<a comment_id='"+data.data.comment_id+"' class='ups praise_comment1'>0</a></h5><p class='time'>"+data.data.create_time+"</p><p class='info'>"+data.data.content+"</p></div><hr/></li>";
                     $('#comment_content').val('');
                     $(html).hide().insertBefore($('.users .media').first()).slideDown();
+                    if(parseInt($('.comment_total').html())>=99){
+                        $('.comment_total').html('99+');
+                    }
+                    else{
+                        $('.comment_total').html(parseInt($('.comment_total').html())+1);
+                    }
 
-                     //重新注册对评论的点赞 评论后的内容自己可以立马点赞
-				    $('.praise_comment').click(function(){
+                    //重新注册对评论的点赞 评论后的内容自己可以立马点赞
+				    $('.praise_comment1').click(function(){
 				        //前台判断是否点赞过
 				        if($(this).attr('praised')=='praised'){
 				            $('#alert_info').html('您已赞过').fadeIn(700).fadeOut(700);
@@ -93,12 +104,12 @@ $(function(){
                 }
                 else if(data.code==200){
                     for(var i=0; i<data.all; i++){
-                        var html="<li class='media'><div class='media-left'><a href='"+data.data[i].user_id+"'><img class='media-object' src='"+data.data[i].head_portrait+"' alt='头像'></a></div><div class='media-body'><h5 class='media-heading'>"+data.data[i].name+"<a comment_id='"+data.data[i].comment_id+"' class='ups praise_comment'>0</a></h5><p class='time'>"+data.data[i].create_time+"</p><p class='info'>"+data.data[i].content+"</p></div><hr/></li>";
+                        var html="<li class='media'><div class='media-left'><a href='"+data.data[i].user_id+"'><img class='media-object' src='"+data.data[i].head_portrait+"' alt='头像'></a></div><div class='media-body'><h5 class='media-heading'>"+data.data[i].name+"<a comment_id='"+data.data[i].comment_id+"' class='ups praise_comment2'>"+data.data[i].praise+"</a></h5><p class='time'>"+data.data[i].create_time+"</p><p class='info'>"+data.data[i].content+"</p></div><hr/></li>";
                         $(html).hide().insertAfter($('.users .media').last()).slideDown();
                     }
                     $('#see_all_comment').attr('disabled', true);
                      //重新注册对评论的点赞
-				    $('.praise_comment').click(function(){
+				    $('.praise_comment2').click(function(){
 				        //前台判断是否点赞过
 				        if($(this).attr('praised')=='praised'){
 				            $('#alert_info').html('您已赞过').fadeIn(700).fadeOut(700);
@@ -165,6 +176,7 @@ $(function(){
         $('#data_form').slideDown(200, function(){
             $('.blank').on('touchend click', function(){
                  $('#data_form').slideUp(400);
+                 $('#comment').slideUp(400);
                  //$('body').css('background', '');
             });
         });
@@ -226,7 +238,11 @@ $(function(){
         if($(e.target).closest('.guanzhu').length!=0){
             return;
         }
-    	location.href='http://ascexz.320.io/GoodPage/author/'+article_user_id;
+        if(client_type=='none'){
+            location.href=app_memo+'author/'+article_user_id;
+        }else{
+    	   location.href=web_http+'author/'+article_user_id;
+        }
     });
 
     /*关注*/
@@ -234,6 +250,8 @@ $(function(){
         if($('.guanzhu_button').html()=='已关注'){
             return;
         }
+        //var token=document.cookie;
+        //document.cookie = token+';path=/';
         $.ajax({
             url: base_url+'user/follow/'+article_user_id+'/1',
             type: 'GET',

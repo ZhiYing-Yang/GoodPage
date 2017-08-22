@@ -24,23 +24,26 @@ class Login extends CI_Controller {
 
 			//判断数据库中有没有该用户以前的登陆信息
 			$get_info = 'user_id, head_portrait, name, sex';
-			$status = $this->db->select($get_info)->where('users', array('username' => $data['openid']))->result_array();
+			$status = $this->db->select($get_info)->get_where('users', array('username' => $data['openid']))->result_array();
 			if (!empty($status)) {
 				$cookie = $data['openid'] . mt_rand(0, 9999);
 				$this->db->update('users', array('last_login_time' => date('Y-m-d H:i:s', time()), 'cookie' => md5($cookie)), array('user_id' => $status[0]['user_id']));
 				set_cookie('token', $cookie, 7 * 24 * 60 * 60);
 				$datas = $status[0];
+
+				//$datas['head_portrait'] = urlencode($datas['head_portrait']);
 				$result = array(
 					'code' => 200,
 					'message' => '登录成功',
 					'data' => $datas,
 				);
-				get_type($result);
+				//var_dump(json_encode($result, JSON_UNESCAPED_UNICODE));die;
+				get_type($result, 1);
 			}
 
 			//若没有 则将其信息注册保存到数据库
 			//检查昵称是否重复
-			$name = $data['name'];
+			$name = isset($data['name']) ? $data['name'] : mb_substr($data['openid'], 10, 15);
 			$status = $this->db->select('user_id')->get_where('users', array('name' => $data['name']))->result_array();
 			if (!empty($status)) {
 				$name = $data['name'] . mt_rand(0, 999999999);
@@ -55,7 +58,7 @@ class Login extends CI_Controller {
 			$cookie = $datas['username'] . mt_rand(0, 9999);
 			$datas['cookie'] = md5($cookie);
 			$status = $this->API_model->register($datas);
-			if ($stasus) {
+			if ($status) {
 				set_cookie('token', $cookie, 7 * 24 * 60 * 60);
 				//第一次微信登陆返回的信息
 				$back = array(
@@ -65,12 +68,17 @@ class Login extends CI_Controller {
 					'sex' => $data['gender'],
 				);
 				$result = array(
-					'code' => '200',
+					'code' => 200,
 					'message' => '登录成功',
 					'data' => $back,
 				);
 				get_type($result);
 			}
+			$result = array(
+				'code' => 400,
+				'message' => '登陆失败',
+			);
+			get_type($result);
 		}
 
 		//账号密码登陆
@@ -107,14 +115,12 @@ class Login extends CI_Controller {
 				);
 				get_type($result);
 			};
-
 			set_cookie('token', $cookie, 7 * 24 * 60 * 60);
 			$array = array(
 				'user_id' => $user_info[0]['user_id'],
 				'username' => $user_info[0]['username'],
 			);
 			$this->session->set_userdata($array);
-			unset($user_info[0]['cookie']);
 			$result = array(
 				'code' => 200,
 				'message' => '登录成功',
@@ -285,6 +291,9 @@ class Login extends CI_Controller {
 
 				delete_cookie('token');
 			}
+
+			//重新返回cookie
+			set_cookie('token', $cookie, 7 * 24 * 60 * 60);
 			get_type($result);
 		} else {
 			$result = array(
@@ -298,11 +307,12 @@ class Login extends CI_Controller {
 	//注销登陆
 	public function logout() {
 		$this->load->helper('cookie');
-
+		$user_id = $this->session->userdata('user_id');
 		delete_cookie('token');
 		unset($_COOKIE['token']);
 		unset($_SESSION);
 		session_destroy();
+		$status = $this->db->update('users', array('cookie' => ''), array('user_id' => $user_id));
 		if (!isset($_COOKIE['token'])) {
 			$result = array(
 				'code' => 200,
@@ -353,72 +363,6 @@ class Login extends CI_Controller {
 			);
 			get_type($result);
 		}
-	}
-	/*
-		各种测试
-	*/
-	public function ceshi() {
-		$this->load->helper('cookie');
-		/*$data=$this->db->get_where('users', array('username'=>'15515566666'))->result_array();
-			echo date('Y-m-d H:i:s', $data[0]['last_login_time']).'<br>';
-			$time=time();
-		*/
-		// if(isset($_SESSION)){
-		// 	unset($_SESSION);
-		// }
-		//unset($_SESSION);
-		//echo sha1(md5(17630026797));
-		/*if(isset($_SESSION)){
-				p($_SESSION);
-			}
-			p($_COOKIE);
-			$array=array(
-				'username'=>'15515566666',
-				'passworf'=>'12345678',
-			);
-			echo json_encode($array);
-			$data['cookie']=$this->input->cookie('username');
-			$result=array(
-				'code'=>400,
-				'data'=>$data,
-			);
-		*/
-		// $header = $this->input->request_headers();
-		// p($header);
-
-		$user_id = '1';
-		var_dump($this->API_model->to_Account('标题', '内容', $user_id));
-	}
-
-	/*
-		测试请求
-	*/
-	public function ceshi_curl() {
-		$json = $this->input->raw_input_stream;
-		$data = json_decode($json, true);
-		$url = $data['url'];
-		$postJson = $data['json'];
-		$length = strlen($postJson);
-		$header = array(
-			'Content-type:application/json;charset=utf-8',
-			'Contetn-length:' . $length,
-		);
-		$ch = curl_init();
-		//echo $postJson;die;
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postJson);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-
-		$result = curl_exec($ch);
-		if (curl_errno($ch)) {
-			$rtesult = '{"error":"' . curl_error($ch) . '"}';
-		}
-		curl_close($ch);
-		echo $result;
 	}
 
 }

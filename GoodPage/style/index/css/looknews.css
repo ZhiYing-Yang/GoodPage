@@ -129,7 +129,7 @@ a:hover{
     display: block;
     color: #eee;
     text-align: center;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 #report {
@@ -201,7 +201,7 @@ a:hover{
 
 .content_comment .comment_head .comment_open {
     float: right;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .users {
@@ -215,7 +215,7 @@ a:hover{
 }
 
 .users .info {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -224,7 +224,7 @@ a:hover{
 }
 
 .users p {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .users .ups {
@@ -258,7 +258,7 @@ a:hover{
 .float_fixed {
     height: 40px;
     line-height: 40px;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .float_fixed .open_things {
@@ -294,7 +294,7 @@ a:hover{
     text-align: center;
 }
 .data_form .data_head span{
-    font-size: 18px;
+    font-size: 17px;
 }
 .data_form .data_input input{
     margin: 3% 0;
@@ -305,7 +305,7 @@ a:hover{
     top: 50%;
     background: #000;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 1.3em;
     border-radius: 5px;
     padding: 10px;
     display: none;

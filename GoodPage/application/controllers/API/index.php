@@ -220,13 +220,14 @@ class Index extends CI_Controller {
 		$article['comment_total'] = $this->db->where(array('article_id' => $article_id))->count_all_results('comment');
 		$data['article'] = $article;
 		$data['comment'] = $comment;
-		switch ($article['type']) {
-		case '活动':
-			$this->load->view('index/huodong.html', $data);
-			break;
-		default:
-			$this->load->view('index/wenzhang.html', $data);
-		}
+		$this->load->view('index/huodong.html', $data);
+		// switch ($article['type']) {
+		// case '活动':
+		// 	$this->load->view('index/huodong.html', $data);
+		// 	break;
+		// default:
+		// 	$this->load->view('index/wenzhang.html', $data);
+		// }
 
 		//get_type($result);
 	}
